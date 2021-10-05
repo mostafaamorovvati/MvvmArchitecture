@@ -10,4 +10,8 @@ class MainActivity : AppCompatActivity() {
 
         //.......
     }
+    
+    fun test(){
+        // method body ...
+    }
 }
