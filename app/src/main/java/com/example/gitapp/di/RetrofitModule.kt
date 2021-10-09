@@ -11,28 +11,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val retrofitModule = module {
-
-    fun provideGson(): Gson {
-        return GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
-    }
-
-    fun provideHttpClient(): OkHttpClient {
-        val okHttpClientBuilder = OkHttpClient.Builder()
-        return okHttpClientBuilder.build()
-    }
-
-    fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(factory))
-            .client(client)
-            .build()
-    }
-
-    fun provideUseApi(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
-
     single { provideGson() }
     single { provideHttpClient() }
     single { provideRetrofit(get(), get()) }
     factory { provideUseApi(get()) }
 }
+
+private fun provideGson(): Gson {
+    return GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
+}
+
+private fun provideHttpClient(): OkHttpClient {
+    val okHttpClientBuilder = OkHttpClient.Builder()
+    return okHttpClientBuilder.build()
+}
+
+private fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(Constants.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(factory))
+        .client(client)
+        .build()
+}
+
+private fun provideUseApi(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)

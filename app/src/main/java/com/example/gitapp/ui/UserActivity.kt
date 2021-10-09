@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserActivity : AppCompatActivity() {
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val mUserViewModel: UserViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,23 +21,25 @@ class UserActivity : AppCompatActivity() {
         setupObserver()
 
         findViewById<Button>(R.id.btnClick).setOnClickListener {
-            userViewModel.runGetAllUsers()
+            mUserViewModel.runGetAllUsers()
         }
 
     }
 
     private fun setupObserver() {
-        userViewModel.mUsers.observe(this, Observer {
+        mUserViewModel.mUsers.observe(this, Observer {
             it?.let { resources ->
                 when (resources.status) {
                     Status.SUCCESS -> {
                         this.showToast("Success")
+
                         for (i in it.data ?: emptyList()) {
-                            Log.d("LOG_TAG", "onCreate: ${i.login}")
+                            Log.d("LOG_TAG", "onCreate: ${i.author}")
                         }
+
                     }
                     Status.ERROR -> {
-                        this.showToast("Error")
+                        this.showToast(it.message.toString())
                     }
 
                     Status.LOADING -> {
