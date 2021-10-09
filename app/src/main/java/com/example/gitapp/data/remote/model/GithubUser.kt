@@ -1,4 +1,4 @@
-package com.example.gitapp.data.model
+package com.example.gitapp.data.remote.model
 
 data class GithubUser(
     val id: Long,

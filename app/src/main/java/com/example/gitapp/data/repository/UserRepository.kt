@@ -1,7 +1,13 @@
 package com.example.gitapp.data.repository
 
-import com.example.gitapp.data.remote.GithubApi
+import com.example.gitapp.data.remote.api.ApiHelper
+import com.example.gitapp.data.remote.model.GithubUser
+import retrofit2.Response
 
-class UserRepository(private val api: GithubApi) {
-    fun getAllUsers() = api.getUsers()
+class UserRepository(private val apiHelper: ApiHelper) {
+
+    suspend fun getAllUsers(): Response<List<GithubUser>> {
+        return apiHelper.getUsers()
+    }
+
 }
