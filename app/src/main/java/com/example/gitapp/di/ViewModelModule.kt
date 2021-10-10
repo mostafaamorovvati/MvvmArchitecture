@@ -1,13 +1,13 @@
 package com.example.gitapp.di
 
-import com.example.gitapp.ui.UserViewModel
+import com.example.gitapp.ui.photoList.ShowPhotoViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
 
     viewModel {
-        UserViewModel(get(), get())
+        ShowPhotoViewModel(get(), get())
     }
 
 }

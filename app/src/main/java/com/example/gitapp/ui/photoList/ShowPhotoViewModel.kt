@@ -1,4 +1,4 @@
-package com.example.gitapp.ui
+package com.example.gitapp.ui.photoList
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,19 +9,26 @@ import com.example.gitapp.utils.NetworkHelper
 import com.example.gitapp.utils.Resource
 import kotlinx.coroutines.launch
 
-class UserViewModel(
+class ShowPhotoViewModel(
     private val mRepository: UserRepository,
     private val mNetworkHelper: NetworkHelper
 ) : ViewModel() {
 
-    val mUsers = MutableLiveData<Resource<List<Photo>>>()
+    val mUsers = MutableLiveData<Resource<ArrayList<Photo>>>()
+    private val mLimit = 20
+     var mPage = 1
 
-    fun runGetAllUsers(page: Int, limit: Int) {
+
+    init {
+        runGetAllPhotos()
+    }
+
+     fun runGetAllPhotos() {
         viewModelScope.launch {
             mUsers.postValue(Resource.loading(null))
             try {
                 if (mNetworkHelper.isNetworkConnected()) {
-                    mRepository.getAllUsers(page , limit).let {
+                    mRepository.getAllUsers(mPage, mLimit).let {
                         if (it.isSuccessful) {
                             val githubUsers = it.body()
                             if (githubUsers != null) {
@@ -38,4 +45,17 @@ class UserViewModel(
             }
         }
     }
+
+    fun setPage(page: Int) {
+        mPage = page
+    }
+
+    fun getCurrentPage(): Int {
+        return mPage
+    }
+
+    fun clearePage() {
+        mPage = 1
+    }
+
 }

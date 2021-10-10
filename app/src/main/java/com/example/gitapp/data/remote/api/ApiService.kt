@@ -10,8 +10,8 @@ interface ApiService {
 
     @GET("v2/list")
     suspend fun getUsers(
-            @Query("page") index: Int,
-            @Query("limit") count: Int
-    ): Response<List<Photo>>
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): Response<ArrayList<Photo>>
 
 }
