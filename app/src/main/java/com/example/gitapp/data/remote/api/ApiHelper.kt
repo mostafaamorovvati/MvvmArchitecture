@@ -5,6 +5,9 @@ import retrofit2.Response
 
 interface ApiHelper {
 
-    suspend fun getUsers(): Response<List<Photo>>
+    suspend fun getUsers(
+            page: Int,
+            limit: Int
+    ): Response<List<Photo>>
 
 }

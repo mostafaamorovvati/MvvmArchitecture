@@ -6,8 +6,8 @@ import retrofit2.Response
 
 class UserRepository(private val apiHelper: ApiHelper) {
 
-    suspend fun getAllUsers(): Response<List<Photo>> {
-        return apiHelper.getUsers()
+    suspend fun getAllUsers(page: Int, limit: Int): Response<List<Photo>> {
+        return apiHelper.getUsers(page, limit)
     }
 
 }

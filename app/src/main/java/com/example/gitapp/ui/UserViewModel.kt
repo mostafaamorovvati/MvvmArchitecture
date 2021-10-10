@@ -16,12 +16,12 @@ class UserViewModel(
 
     val mUsers = MutableLiveData<Resource<List<Photo>>>()
 
-    fun runGetAllUsers() {
+    fun runGetAllUsers(page: Int, limit: Int) {
         viewModelScope.launch {
             mUsers.postValue(Resource.loading(null))
             try {
                 if (mNetworkHelper.isNetworkConnected()) {
-                    mRepository.getAllUsers().let {
+                    mRepository.getAllUsers(page , limit).let {
                         if (it.isSuccessful) {
                             val githubUsers = it.body()
                             if (githubUsers != null) {

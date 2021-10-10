@@ -21,7 +21,7 @@ class UserActivity : AppCompatActivity() {
         setupObserver()
 
         findViewById<Button>(R.id.btnClick).setOnClickListener {
-            mUserViewModel.runGetAllUsers()
+            mUserViewModel.runGetAllUsers(2, 30)
         }
 
     }

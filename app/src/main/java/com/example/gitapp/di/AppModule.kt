@@ -8,6 +8,7 @@ import org.koin.dsl.module
 val appModule = module {
 
     single<ApiHelper> { return@single ApiHelperImpl(get()) }
+
     factory { provideNetworkHelper() }
 
 }
