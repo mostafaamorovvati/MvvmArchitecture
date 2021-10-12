@@ -3,6 +3,7 @@ package com.example.gitapp.ui.photoList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gitapp.R
 import com.example.gitapp.data.remote.model.Photo
 import com.example.gitapp.databinding.LoadMoreLayoutBinding
 import com.example.gitapp.databinding.RvItemLayoutBinding
@@ -50,7 +51,7 @@ class PhotoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 ImageLoader.loadImage(
                     mItems[position].download_url,
                     photoListHolder.mBinding.imageView,
-                    0,
+                    R.drawable.charlie_loader,
                     photoListHolder.itemView.context
                 )
             }

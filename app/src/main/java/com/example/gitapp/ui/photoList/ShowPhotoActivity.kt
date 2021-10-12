@@ -40,7 +40,12 @@ class ShowPhotoActivity : AppCompatActivity() {
                         scrollListener.newDataReceived()
                         mBinding.progressCircular.gone()
                         mBinding.rvPhotoList.visible()
-                        it.data?.let { it1 -> mPhotoListAdapter.setData(it1, mShowPhotoViewModel.getCurrentPage()) }
+                        it.data?.let { it1 ->
+                            mPhotoListAdapter.setData(
+                                it1,
+                                mShowPhotoViewModel.getCurrentPage()
+                            )
+                        }
 
                         isFirstLoad = false
                     }
@@ -81,10 +86,8 @@ class ShowPhotoActivity : AppCompatActivity() {
 
                         addProgressToList()
 
-                        Handler().postDelayed({
-                            mShowPhotoViewModel.setPage(mShowPhotoViewModel.getCurrentPage() + 1)
-                            mShowPhotoViewModel.runGetAllPhotos()
-                        }, 2000)
+                        mShowPhotoViewModel.setPage(mShowPhotoViewModel.getCurrentPage() + 1)
+                        mShowPhotoViewModel.runGetAllPhotos()
 
 
                     }

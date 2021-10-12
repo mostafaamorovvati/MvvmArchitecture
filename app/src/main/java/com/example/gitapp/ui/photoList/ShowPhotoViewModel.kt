@@ -15,7 +15,7 @@ class ShowPhotoViewModel(
 ) : ViewModel() {
 
     val mUsers = MutableLiveData<Resource<ArrayList<Photo>>>()
-    private val mLimit = 20
+    private val mLimit = 30
      var mPage = 1
 
 
