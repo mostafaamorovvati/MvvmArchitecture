@@ -1,21 +1,21 @@
 package com.example.gitapp.ui.photoList
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gitapp.R
 import com.example.gitapp.data.remote.model.Photo
-import com.example.gitapp.databinding.LoadMoreLayoutBinding
-import com.example.gitapp.databinding.RvItemLayoutBinding
 import com.example.gitapp.utils.ImageLoader
-
 
 
 class PhotoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-     var mItems: ArrayList<Photo> = arrayListOf()
+    var mItems: ArrayList<Photo> = arrayListOf()
 
-    companion object{
+    companion object {
         const val PHOTO_ITEM = 0
         const val LOAD_MORE_ITEM = 1
         const val LOAD_MORE_TAG = "load_more_tag"
@@ -28,17 +28,13 @@ class PhotoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             PHOTO_ITEM -> PhotoListViewHolder(
-                RvItemLayoutBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.rv_item_layout, parent, false
                 )
             )
             else -> LoadMoreViewHolder(
-                LoadMoreLayoutBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.load_more_layout, parent, false
                 )
             )
         }
@@ -50,7 +46,7 @@ class PhotoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val photoListHolder = (holder as PhotoListViewHolder)
                 ImageLoader.loadImage(
                     mItems[position].download_url,
-                    photoListHolder.mBinding.imageView,
+                    photoListHolder.imageView,
                     R.drawable.charlie_loader,
                     photoListHolder.itemView.context
                 )
@@ -76,12 +72,13 @@ class PhotoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
 
+    inner class PhotoListViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+    }
 
-
-
-    inner class PhotoListViewHolder(val mBinding: RvItemLayoutBinding) :
-        RecyclerView.ViewHolder(mBinding.root)
-
-    inner class LoadMoreViewHolder(val mBinding: LoadMoreLayoutBinding) :
-        RecyclerView.ViewHolder(mBinding.root)
+    inner class LoadMoreViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        val progressBar: ProgressBar = itemView.findViewById(R.id.progress_circular)
+    }
 }

@@ -1,18 +1,19 @@
 package com.example.gitapp.ui.photoList
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gitapp.BR
+import com.example.gitapp.base.BaseActivity
+import com.example.gitapp.R
 import com.example.gitapp.data.remote.model.Photo
 import com.example.gitapp.databinding.ActivityShowPhotoBinding
 import com.example.gitapp.utils.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ShowPhotoActivity : AppCompatActivity() {
+class ShowPhotoActivity : BaseActivity<ActivityShowPhotoBinding,
+        ShowPhotoViewModel>(), ShowPhotoActivityNavigator {
 
     private val mShowPhotoViewModel: ShowPhotoViewModel by viewModel()
     private val mPhotoListAdapter: PhotoListAdapter by inject()
@@ -22,8 +23,10 @@ class ShowPhotoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityShowPhotoBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+
+        mShowPhotoViewModel.setNavigator(this)
+        mBinding = getViewDataBinding()
+
 
         setupPhotoList()
         setupObserver()
@@ -109,5 +112,17 @@ class ShowPhotoActivity : AppCompatActivity() {
             mPhotoListAdapter.mItems.removeAt(mPhotoListAdapter.mItems.size - 1)
             mPhotoListAdapter.notifyDataSetChanged()
         }
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.ViewModel
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_show_photo
+    }
+
+    override fun getViewModel(): ShowPhotoViewModel {
+        return mShowPhotoViewModel
     }
 }

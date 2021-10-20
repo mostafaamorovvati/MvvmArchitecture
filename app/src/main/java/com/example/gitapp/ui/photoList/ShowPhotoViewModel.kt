@@ -1,8 +1,8 @@
 package com.example.gitapp.ui.photoList
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gitapp.base.BaseViewModel
 import com.example.gitapp.data.remote.model.Photo
 import com.example.gitapp.data.repository.UserRepository
 import com.example.gitapp.utils.NetworkHelper
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class ShowPhotoViewModel(
     private val mRepository: UserRepository,
     private val mNetworkHelper: NetworkHelper
-) : ViewModel() {
+) : BaseViewModel<ShowPhotoActivityNavigator>() {
 
     val mUsers = MutableLiveData<Resource<ArrayList<Photo>>>()
     private val mLimit = 30
